@@ -73,20 +73,67 @@ float LinuxParser::MemoryUtilization() { return 0.0; }
 long LinuxParser::UpTime() { return 0; }
 
 // TODO: Read and return the number of jiffies for the system
-long LinuxParser::Jiffies() { return 0; }
+long LinuxParser::Jiffies() {
+  long int total{0}, data;
+  string line,id;
+  std::ifstream stream(kProcDirectory + kStatFilename);
+  if(stream.is_open()){
+    std::getline(stream,line);
+    std::istringstream linestream(line);
+    linestream>>id;
+    for(int i=0;i<10;i++){
+      linestream>>data;
+      total+=data;
+      data=0;
+    }
+  }
+  return total;
+}
 
 // TODO: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 
 // TODO: Read and return the number of active jiffies for the system
-long LinuxParser::ActiveJiffies() { return 0; }
+long LinuxParser::ActiveJiffies() {
+  long int total{0}, data;
+  string line,id;
+  std::ifstream stream(kProcDirectory + kStatFilename);
+  if(stream.is_open()){
+    std::getline(stream,line);
+    std::istringstream linestream(line);
+    linestream>>id;
+    for(int i=0;i<10;i++){
+      linestream>>data;
+      if(i!=3||i!=4) {
+        total += data;
+      }
+      data=0;
+    }
+  }
+  return total; }
 
 // TODO: Read and return the number of idle jiffies for the system
-long LinuxParser::IdleJiffies() { return 0; }
+long LinuxParser::IdleJiffies() {
+  long int total{0}, data;
+  string line,id;
+  std::ifstream stream(kProcDirectory + kStatFilename);
+  if(stream.is_open()){
+    std::getline(stream,line);
+    std::istringstream linestream(line);
+    linestream>>id;
+    for(int i=0;i<10;i++){
+      linestream>>data;
+      if(i==3||i==4) {
+        total += data;
+      }
+      data=0;
+    }
+  }
+  return total;  }
 
 // TODO: Read and return CPU utilization
-vector<string> LinuxParser::CpuUtilization() { return {}; }
+vector<string> LinuxParser::CpuUtilization() { return {"||||"}; }
 
 // TODO: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { return 0; }
