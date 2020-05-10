@@ -4,4 +4,5 @@
 int main() {
   System system;
   NCursesDisplay::Display(system);
+//  std::cout<<system.UpTime()<<"\n";
 }

@@ -22,7 +22,7 @@ vector<Process>& System::Processes() { return processes_; }
 // DONE_LukPek: Return the system's kernel identifier (string)
 std::string System::Kernel() { return LinuxParser::Kernel(); }
 
-// TODO: Return the system's memory utilization
+// DONE_LukPek: Return the system's memory utilization
 float System::MemoryUtilization() {
   std::string found_key, line;
   float total_memory{0}, free_memory{0}, cache_memory{0};
@@ -45,8 +45,6 @@ float System::MemoryUtilization() {
       }
     }
   }
-//  total_memory=total_memory/1048576.0;
-//  free_memory=free_memory/1048576.0;
   return (total_memory-(free_memory+cache_memory))/total_memory;
 }
 
@@ -59,5 +57,26 @@ int System::RunningProcesses() { return 0; }
 // TODO: Return the total number of processes on the system
 int System::TotalProcesses() { return 0; }
 
-// TODO: Return the number of seconds since the system started running
-long int System::UpTime() { return 0; }
+// DONE_LukPek: Return the number of seconds since the system started running
+std::string System::UpTime() {
+  std::ifstream file(LinuxParser::kProcDirectory+LinuxParser::kUptimeFilename);
+  long int seconds;
+  std::stringstream uptime;
+  int hours, minutes;
+  if(file.is_open()){
+    std::string line;
+    std::getline(file,line);
+    std::istringstream linestream(line);
+    linestream>>seconds;
+  }
+  hours=seconds/3600;
+  seconds-=(hours*3600);
+  minutes=seconds/60;
+  seconds-=(minutes*60);
+  if(hours<10){
+    uptime<<"0"<<hours<<":"<<minutes<<":"<<seconds;
+  }else {
+    uptime << hours << ":" << minutes << ":" << seconds;
+  }
+  return uptime.str();
+}
