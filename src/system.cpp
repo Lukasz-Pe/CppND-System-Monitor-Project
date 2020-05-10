@@ -51,7 +51,7 @@ float System::MemoryUtilization() {
 // DONE_LukPek: Return the operating system name
 std::string System::OperatingSystem() { return LinuxParser::OperatingSystem(); }
 
-// TODO: Return the number of processes actively running on the system
+// DONE_LukPek: Return the number of processes actively running on the system
 int System::RunningProcesses() {
   int processes{0};
   std::ifstream file(LinuxParser::kProcDirectory+LinuxParser::kStatFilename);
@@ -68,7 +68,7 @@ int System::RunningProcesses() {
   return processes;
 }
 
-// TODO: Return the total number of processes on the system
+// DONE_LukPek: Return the total number of processes on the system
 int System::TotalProcesses() {
   int processes{0};
   std::ifstream file(LinuxParser::kProcDirectory+LinuxParser::kStatFilename);
@@ -86,25 +86,14 @@ int System::TotalProcesses() {
 }
 
 // DONE_LukPek: Return the number of seconds since the system started running
-std::string System::UpTime() {
+long System::UpTime() {
   std::ifstream file(LinuxParser::kProcDirectory+LinuxParser::kUptimeFilename);
   long int seconds;
-  std::stringstream uptime;
-  int hours, minutes;
   if(file.is_open()){
     std::string line;
     std::getline(file,line);
     std::istringstream linestream(line);
     linestream>>seconds;
   }
-  hours=seconds/3600;
-  seconds-=(hours*3600);
-  minutes=seconds/60;
-  seconds-=(minutes*60);
-  if(hours<10){
-    uptime<<"0"<<hours<<":"<<minutes<<":"<<seconds;
-  }else {
-    uptime << hours << ":" << minutes << ":" << seconds;
-  }
-  return uptime.str();
+  return seconds;
 }
