@@ -4,8 +4,8 @@
 
 class Processor {
  public:
-  float Utilization();  // TODO: See src/processor.cpp
-  // TODO: Declare any necessary private members
+  float Utilization();  // DONE_LukPek: See src/processor.cpp
+  // DONE_LukPek: Declare any necessary private members
  private:
   //The order of arrays elements is the same as in /proc/stat cpu line(s)
   //That is: [0]user [1]nice [2]system [3]idle [4]iowait [5]irq [6]softirq [7]steal [8]guest [9]guest_nice

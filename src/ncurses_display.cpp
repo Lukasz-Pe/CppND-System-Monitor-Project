@@ -83,7 +83,7 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
   }
 }
 
-void NCursesDisplay::Display(System& system, int n) {
+[[noreturn]] void NCursesDisplay::Display(System& system, int n) {
   initscr();      // start ncurses
   noecho();       // do not print input values
   cbreak();       // terminate ncurses on ctrl + c
@@ -104,7 +104,7 @@ void NCursesDisplay::Display(System& system, int n) {
     wrefresh(system_window);
     wrefresh(process_window);
     refresh();
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::milliseconds(250));
   }
   endwin();
 }

@@ -66,9 +66,6 @@ vector<int> LinuxParser::Pids() {
   return pids;
 }
 
-// TODO: Read and return the system memory utilization
-float LinuxParser::MemoryUtilization() { return 0.0; }
-
 // TODO: Read and return the system uptime
 long LinuxParser::UpTime() { return 0; }
 
@@ -131,9 +128,6 @@ long LinuxParser::IdleJiffies() {
     }
   }
   return total;  }
-
-// TODO: Read and return CPU utilization
-vector<string> LinuxParser::CpuUtilization() { return {"||||"}; }
 
 // TODO: Read and return the total number of processes
 int LinuxParser::TotalProcesses() { return 0; }

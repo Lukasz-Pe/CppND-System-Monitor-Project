@@ -20,7 +20,6 @@ const std::string kOSPath{"/etc/os-release"};
 const std::string kPasswordPath{"/etc/passwd"};
 
 // System
-float MemoryUtilization();
 long UpTime();
 std::vector<int> Pids();
 int TotalProcesses();
@@ -41,7 +40,6 @@ enum CPUStates {
   kGuest_,
   kGuestNice_
 };
-std::vector<std::string> CpuUtilization();
 long Jiffies();
 long ActiveJiffies();
 long ActiveJiffies(int pid);

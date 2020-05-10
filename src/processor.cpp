@@ -1,6 +1,6 @@
 #include "processor.h"
 
-// TODO: Return the aggregate CPU utilization
+// DONE_LukPek: Return the aggregate CPU utilization
 float Processor::Utilization() {
   Make_previous();
   Get_data();
