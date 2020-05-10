@@ -52,10 +52,38 @@ float System::MemoryUtilization() {
 std::string System::OperatingSystem() { return LinuxParser::OperatingSystem(); }
 
 // TODO: Return the number of processes actively running on the system
-int System::RunningProcesses() { return 0; }
+int System::RunningProcesses() {
+  int processes{0};
+  std::ifstream file(LinuxParser::kProcDirectory+LinuxParser::kStatFilename);
+  if(file.is_open()){
+    std::string line, key;
+    while(std::getline(file,line)){
+      std::stringstream sstream(line);
+      sstream>>key;
+      if(key=="procs_running"){
+        sstream>>processes;
+      }
+    }
+  }
+  return processes;
+}
 
 // TODO: Return the total number of processes on the system
-int System::TotalProcesses() { return 0; }
+int System::TotalProcesses() {
+  int processes{0};
+  std::ifstream file(LinuxParser::kProcDirectory+LinuxParser::kStatFilename);
+  if(file.is_open()){
+    std::string line, key;
+    while(std::getline(file,line)){
+      std::stringstream sstream(line);
+      sstream>>key;
+      if(key=="processes"){
+        sstream>>processes;
+      }
+    }
+  }
+  return processes;
+}
 
 // DONE_LukPek: Return the number of seconds since the system started running
 std::string System::UpTime() {
