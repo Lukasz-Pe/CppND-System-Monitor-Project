@@ -33,12 +33,24 @@ long int Process::UpTime() { return uptime_; }
 bool Process::operator<(Process const& a[[maybe_unused]]) const {
   return this->cpu_utilization_<a.cpu_utilization_;
 }
+bool Process::operator>(Process const& a[[maybe_unused]]) const {
+  return this->cpu_utilization_>a.cpu_utilization_;
+}
 void Process::GetData(const int& pid) {
   pid_=pid;
-  cpu_utilization_=LinuxParser::ProcessCpuUtilization(pid_);
   command_=LinuxParser::Command(pid_);
+  CPUUtilization(pid_);
   ram_=LinuxParser::Ram(pid_);
   user_=LinuxParser::User(pid_);
   uptime_=LinuxParser::UpTime(pid_);
   
+}
+void Process::CPUUtilization(int pid) {
+  previous_process_cpu_=now_process_cpu_;
+  now_process_cpu_=LinuxParser::ActiveJiffies(pid);
+  previous_total_cpu_=now_total_cpu_;
+  now_total_cpu_=LinuxParser::Jiffies();
+  float diff_total=static_cast<float>((now_total_cpu_-previous_total_cpu_));
+  float diff_proc=static_cast<float>((now_process_cpu_-previous_process_cpu_));
+  cpu_utilization_=diff_proc/diff_total;
 }

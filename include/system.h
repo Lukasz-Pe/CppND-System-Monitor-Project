@@ -18,12 +18,12 @@ class System {
   int RunningProcesses();             // DONE_LukPek: See src/system.cpp
   std::string Kernel();               // DONE_LukPek: See src/system.cpp
   std::string OperatingSystem();      // DONE_LukPek: See src/system.cpp
-
+  std::vector<Process> processes_;
   // TODO: Define any necessary private members
  private:
   Processor cpu_;
-  std::vector<Process> processes_ = {};
   
+  static bool compare(const Process& a, const Process& b);
   
 };
 

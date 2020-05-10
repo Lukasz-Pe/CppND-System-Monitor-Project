@@ -18,7 +18,14 @@ Processor& System::Cpu() { return cpu_; }
 
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() {
-  
+  vector<int> pids=LinuxParser::Pids();
+  processes_.clear();
+  for(int pid:pids){
+    Process process;
+    process.GetData(pid);
+    processes_.push_back(process);
+  }
+  std::sort(processes_.begin(),processes_.end(),compare);
   return processes_; }
 
 // DONE_LukPek: Return the system's kernel identifier (string)
@@ -45,4 +52,7 @@ int System::TotalProcesses() {
 // DONE_LukPek: Return the number of seconds since the system started running
 long System::UpTime() {
   return LinuxParser::UpTime();
+}
+bool System::compare(const Process& a, const Process& b){
+  return a>b;
 }

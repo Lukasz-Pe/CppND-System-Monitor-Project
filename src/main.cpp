@@ -4,5 +4,5 @@
 int main() {
   System system;
   NCursesDisplay::Display(system);
-//  std::cout<<system.UpTime()<<"\n";
+//  std::cout<<LinuxParser::ProcessCpuUtilization(1644)<<"\n";
 }
