@@ -16,7 +16,7 @@ using std::vector;
 // DONE_LukPek: Return the system's CPU
 Processor& System::Cpu() { return cpu_; }
 
-// TODO: Return a container composed of the system's processes
+// DONE_LukPek: Return a container composed of the system's processes
 vector<Process>& System::Processes() {
   vector<int> pids=LinuxParser::Pids();
   processes_.clear();
@@ -54,5 +54,5 @@ long System::UpTime() {
   return LinuxParser::UpTime();
 }
 bool System::compare(const Process& a, const Process& b){
-  return a>b;
+  return a<b;
 }

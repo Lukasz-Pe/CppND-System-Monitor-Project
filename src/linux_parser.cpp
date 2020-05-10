@@ -123,7 +123,7 @@ long LinuxParser::Jiffies() {
   return total;
 }
 
-// TODO: Read and return the number of active jiffies for a PID
+// DONE_LukPek: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::ActiveJiffies(int pid) {
   long int total{0}, starttime{0};
@@ -144,6 +144,7 @@ long LinuxParser::ActiveJiffies(int pid) {
       data= {};
     }
   }
+//  return total;
   return std::abs(total-starttime);
 }
 
@@ -230,10 +231,24 @@ string LinuxParser::Command(int pid) {
   return cmd;
 }
 
-// TODO: Read and return the memory used by a process
+// DONE_LukPek: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Ram(int pid[[maybe_unused]]) {
-  return string(); }
+string LinuxParser::Ram(int pid) {
+  int value{0};
+  std::ifstream file(kProcDirectory+"/"+std::to_string(pid)+kStatusFilename);
+  if(file.is_open()){
+    std::string line, key;
+    while(std::getline(file,line)){
+      std::stringstream sstream(line);
+      sstream>>key;
+      if(key=="VmSize:"){
+        sstream>>value;
+      }
+    }
+  }
+  value/=1024;
+  return std::to_string(value);
+}
 
 // TODO: Read and return the user ID associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
@@ -243,6 +258,25 @@ string LinuxParser::Uid(int pid[[maybe_unused]]) { return string(); }
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::User(int pid[[maybe_unused]]) { return string(); }
 
-// TODO: Read and return the uptime of a process
+// DONE_LukPek: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::UpTime(int pid[[maybe_unused]]) { return 0; }
+long LinuxParser::UpTime(int pid) {
+  std::ifstream file(kProcDirectory+"/"+std::to_string(pid)+kStatFilename);
+  long int seconds{0};
+  string line,id, data;
+  if(file.is_open()){
+    std::getline(file,line);
+    std::istringstream linestream(line);
+    linestream>>id;
+    for(int i=0;i<24;i++){
+      linestream>>data;
+      if(i==22){
+        seconds=stol(data);
+      }
+      data= {};
+    }
+  }
+  seconds/=sysconf(_SC_CLK_TCK);
+  seconds=LinuxParser::UpTime()-seconds;
+  return seconds;
+}

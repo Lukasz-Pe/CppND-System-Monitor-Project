@@ -11,7 +11,7 @@
 class System {
  public:
   Processor& Cpu();                   // DONE_LukPek: See src/system.cpp
-  std::vector<Process>& Processes();  // TODO: See src/system.cpp
+  std::vector<Process>& Processes();  // DONE_LukPek: See src/system.cpp
   float MemoryUtilization();          // DONE_LukPek: See src/system.cpp
   long UpTime();                      // DONE_LukPek: See src/system.cpp
   int TotalProcesses();               // DONE_LukPek: See src/system.cpp
@@ -19,7 +19,7 @@ class System {
   std::string Kernel();               // DONE_LukPek: See src/system.cpp
   std::string OperatingSystem();      // DONE_LukPek: See src/system.cpp
   std::vector<Process> processes_;
-  // TODO: Define any necessary private members
+  // DONE_LukPek: Define any necessary private members
  private:
   Processor cpu_;
   

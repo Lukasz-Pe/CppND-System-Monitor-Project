@@ -17,8 +17,27 @@ string Format::ElapsedTime(long seconds) {
   minutes=seconds/60;
   seconds-=(minutes*60);
   if(hours<10){
-    uptime<<"0"<<hours<<":"<<minutes<<":"<<seconds;
+    uptime<<"0"<<hours<<":";
   }else {
-    uptime << hours << ":" << minutes << ":" << seconds;
+    uptime << hours <<":";
+  }
+  if(minutes<10){
+    uptime<<"0"<<minutes<<":";
+  }else {
+    uptime << minutes << ":";
+  }
+  if(seconds<10){
+    uptime<<"0"<<seconds;
+  }else {
+    uptime << seconds;
   }
   return uptime.str(); }
+std::string Format::Nums(long count) {
+  if(count<10){
+    return ("00"+std::to_string(count));
+  }
+  if(count<100){
+    return ("0"+std::to_string(count));
+  }
+  return std::to_string(count);
+}
