@@ -16,7 +16,10 @@ class Process {
   std::string Ram();                       // DONE_LukPek: See src/process.cpp
   long int UpTime();                       // DONE_LukPek: See src/process.cpp
   bool operator<(Process const& a) const;  // DONE_LukPek: See src/process.cpp
+  bool operator>(Process const& a) const;
+  bool operator==(Process const& a) const;
   void GetData(const int& pid);
+  void Update();
   // DONE_LukPek: Declare any necessary private members
  private:
   float CPUUtilization(int pid);

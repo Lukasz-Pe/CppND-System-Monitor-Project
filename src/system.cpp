@@ -19,11 +19,35 @@ Processor& System::Cpu() { return cpu_; }
 // DONE_LukPek: Return a container composed of the system's processes
 vector<Process>& System::Processes() {
   vector<int> pids=LinuxParser::Pids();
-  processes_.clear();
-  for(int pid:pids){
-    Process process;
-    process.GetData(pid);
-    processes_.push_back(process);
+  if(processes_.empty()){
+    for(int pid:pids){
+      AddProcess(pid);
+    }
+  }else{
+    for(int pid:pids){
+      bool exist=false;
+      for(auto process:processes_){
+        if(pid==process.Pid()) {
+          exist = true;
+        }
+      }
+      if(!exist){
+        AddProcess(pid);
+      }
+    }
+    for(auto process:processes_){
+      bool exists=true;
+      for(auto pid:pids){
+        if(process.Pid()!=pid){
+          exists=false;
+        }else{
+          break;
+        }
+      }
+      if(!exists){
+        processes_.erase(std::find(processes_.begin(),processes_.end(),process));
+      }
+    }
   }
   std::sort(processes_.begin(),processes_.end(),compare);
   return processes_; }
@@ -54,5 +78,10 @@ long System::UpTime() {
   return LinuxParser::UpTime();
 }
 bool System::compare(const Process& a, const Process& b){
-  return a<b;
+  return a>b;
+}
+void System::AddProcess(int pid) {
+  Process process;
+  process.GetData(pid);
+  processes_.push_back(process);
 }

@@ -22,7 +22,7 @@ class System {
   // DONE_LukPek: Define any necessary private members
  private:
   Processor cpu_;
-  
+  void AddProcess(int pid);
   static bool compare(const Process& a, const Process& b);
   
 };

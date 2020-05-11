@@ -252,11 +252,44 @@ string LinuxParser::Ram(int pid) {
 
 // TODO: Read and return the user ID associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Uid(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::Uid(int pid){
+    std::ifstream file(kProcDirectory+"/"+to_string(pid)+kStatusFilename);
+    string uid;
+    if(file.is_open()){
+      string line,key;
+      while(std::getline(file,line)){
+        std::stringstream linestream(line);
+        linestream>>key;
+        if(key=="Uid:"){
+          linestream>>uid;
+        }
+      }
+    }
+  return uid;
+}
 
 // TODO: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::User(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::User(int pid[[maybe_unused]]) {
+  string username{};
+  std::ifstream file(kPasswordPath);
+  if(file.is_open()){
+    string line, x, uid;
+    while(std::getline(file,line)){
+      std::replace(line.begin(),line.end(),':',' ');
+      std::stringstream parse(line);
+      parse>>username>>x>>uid;
+      if(uid==Uid(pid)){
+        if(username.size()<8){
+          for(auto i=username.size()-1;i<8;i++){
+            username.push_back(' ');
+          }
+        }
+        return username;
+      }
+    }
+  }
+  return string(); }
 
 // DONE_LukPek: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
@@ -277,6 +310,6 @@ long LinuxParser::UpTime(int pid) {
     }
   }
   seconds/=sysconf(_SC_CLK_TCK);
-  seconds=LinuxParser::UpTime()-seconds;
+  seconds=std::abs(LinuxParser::UpTime()-seconds);
   return seconds;
 }

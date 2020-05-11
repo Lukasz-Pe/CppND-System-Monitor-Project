@@ -67,7 +67,7 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
   mvwprintw(window, row, user_column, "USER");
   mvwprintw(window, row, cpu_column, "CPU[%%]");
   mvwprintw(window, row, ram_column, "RAM[MB]");
-  mvwprintw(window, row, time_column, "TIME+");
+  mvwprintw(window, row, time_column, "UP TIME");
   mvwprintw(window, row, command_column, "COMMAND");
   wattroff(window, COLOR_PAIR(2));
   for (int i = 0; i < n; ++i) {
@@ -104,7 +104,7 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
     wrefresh(system_window);
     wrefresh(process_window);
     refresh();
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   }
   endwin();
 }
