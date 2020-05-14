@@ -49,8 +49,8 @@ string LinuxParser::Kernel() {
 // DONE_LukPek: Update this to use std::filesystem
 vector<int> LinuxParser::Pids() {
   vector<int> pids{};
-  for(const auto &entry:std::filesystem::directory_iterator(kProcDirectory)){
-    if(entry.is_directory()){
+  for(const auto &entry:fs::directory_iterator(kProcDirectory)){
+    if(fs::is_directory(entry)){
       std::stringstream path(entry.path().string().substr(6,entry.path().string().size()-6));
       int pid{0};
       path>>pid;
