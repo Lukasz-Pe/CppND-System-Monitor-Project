@@ -21,9 +21,7 @@ class Process {
   void GetData(const int& pid);
   // DONE_LukPek: Declare any necessary private members
  private:
-  float CPUUtilization();
-  long int previous_process_cpu_{0}, previous_total_cpu_{0};
-  long int now_process_cpu_{0}, now_total_cpu_{0};
+  void CPUUtilization();
   int pid_{0};
   float cpu_utilization_{0.0};
 };
