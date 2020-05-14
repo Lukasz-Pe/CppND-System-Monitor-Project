@@ -13,7 +13,7 @@ using std::vector;
 // DONE_LukPek: Return this process's ID
 int Process::Pid() { return pid_; }
 
-// TODO: Return this process's CPU utilization
+// DONE_LukPek: Return this process's CPU utilization
 float Process::CpuUtilization() {
   return cpu_utilization_;
 }

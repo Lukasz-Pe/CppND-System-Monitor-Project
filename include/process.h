@@ -12,7 +12,7 @@ class Process {
   int Pid();                               // DONE_LukPek: See src/process.cpp
   std::string User();                      // DONE_LukPek: See src/process.cpp
   std::string Command();                   // DONE_LukPek: See src/process.cpp
-  float CpuUtilization();                  // TODO: See src/process.cpp
+  float CpuUtilization();                  // DONE_LukPek: See src/process.cpp
   std::string Ram();                       // DONE_LukPek: See src/process.cpp
   long int UpTime();                       // DONE_LukPek: See src/process.cpp
   bool operator<(Process const& a) const;  // DONE_LukPek: See src/process.cpp

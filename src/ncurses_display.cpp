@@ -26,7 +26,6 @@ std::string NCursesDisplay::ProgressBar(float percent) {
   if (percent < 0.1 || percent == 1.0)
     display = " " + to_string(percent * 100).substr(0, 3);
   return result + " " + display + "/100%";
-//  return to_string(percent);
 }
 
 void NCursesDisplay::DisplaySystem(System& system, WINDOW* window) {
@@ -104,7 +103,7 @@ void NCursesDisplay::DisplayProcesses(std::vector<Process>& processes,
     wrefresh(system_window);
     wrefresh(process_window);
     refresh();
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::this_thread::sleep_for(std::chrono::milliseconds(250));
   }
   endwin();
 }

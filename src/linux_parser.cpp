@@ -46,23 +46,17 @@ string LinuxParser::Kernel() {
   return kernel;
 }
 
-// BONUS: Update this to use std::filesystem
+// DONE_LukPek: Update this to use std::filesystem
 vector<int> LinuxParser::Pids() {
-  vector<int> pids;
-  DIR* directory = opendir(kProcDirectory.c_str());
-  struct dirent* file;
-  while ((file = readdir(directory)) != nullptr) {
-    // Is this a directory?
-    if (file->d_type == DT_DIR) {
-      // Is every character of the name a digit?
-      string filename(file->d_name);
-      if (std::all_of(filename.begin(), filename.end(), isdigit)) {
-        int pid = stoi(filename);
-        pids.push_back(pid);
-      }
+  vector<int> pids{};
+  for(const auto &entry:std::filesystem::directory_iterator(kProcDirectory)){
+    if(entry.is_directory()){
+      std::stringstream path(entry.path().string().substr(6,entry.path().string().size()-6));
+      int pid{0};
+      path>>pid;
+      pids.push_back(pid);
     }
-  }
-  closedir(directory);
+}
   return pids;
 }
 
@@ -245,7 +239,7 @@ string LinuxParser::Ram(int pid) {
   return std::to_string(value);
 }
 
-// TODO: Read and return the user ID associated with a process
+// DONE_LukPek: Read and return the user ID associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Uid(int pid){
     std::ifstream file(kProcDirectory+"/"+to_string(pid)+kStatusFilename);
@@ -263,7 +257,7 @@ string LinuxParser::Uid(int pid){
   return uid;
 }
 
-// TODO: Read and return the user associated with a process
+// DONE_LukPek: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::User(int pid[[maybe_unused]]) {
   string username{};
