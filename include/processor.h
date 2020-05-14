@@ -13,8 +13,8 @@ class Processor {
   long int now {0}, now_idle{0};
   void Get_data();
   void Make_previous(){previous=now;previous_idle=now_idle;}
-  [[nodiscard]] float Total_diff() const{return static_cast<float>(now-previous);};
-  [[nodiscard]] float Idle_diff() const{return static_cast<float>(now_idle-previous_idle);};
+  float Total_diff() const{return static_cast<float>(now-previous);};
+  float Idle_diff() const{return static_cast<float>(now_idle-previous_idle);};
 };
 
 #endif
