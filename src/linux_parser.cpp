@@ -120,13 +120,13 @@ long LinuxParser::Jiffies() {
 // DONE_LukPek: Read and return the number of active jiffies for a PID
 // REMOVE: [[maybe_unused]] once you define the function
 long LinuxParser::ActiveJiffies(int pid) {
-  long int total{0};
+  long long int total{0};
   string line, data;
   std::ifstream stream(kProcDirectory +"/"+ to_string(pid) + kStatFilename);
   if(stream.is_open()){
     std::getline(stream,line);
     std::istringstream linestream(line);
-    for(int i=0;i<23;i++){
+    for(int i=0;i<17;i++){
       linestream>>data;
       if(i==13||i==14||i==15||i==16) {
         total += stol(data);
@@ -217,6 +217,10 @@ string LinuxParser::Command(int pid) {
   if(file.is_open()){
     std::getline(file,cmd);
   }
+  //adding 30 spaces to cmd in case i was too short
+  for(int i=0;i<30;i++){
+    cmd.push_back(' ');
+  }
   return cmd;
 }
 
@@ -289,7 +293,7 @@ long LinuxParser::UpTime(int pid) {
   if(file.is_open()){
     std::getline(file,line);
     std::istringstream linestream(line);
-    for(int i=0;i<24;i++){
+    for(int i=0;i<22;i++){
       linestream>>data;
       if(i==21){
         seconds=stol(data);

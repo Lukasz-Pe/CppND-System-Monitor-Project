@@ -33,11 +33,11 @@ string Format::ElapsedTime(long seconds) {
   }
   return uptime.str(); }
 std::string Format::Nums(long count) {
-  if(count<10){
-    return ("00"+std::to_string(count));
+  std::string counter;
+  counter=std::to_string(count);
+  //placing additional spaces in order to avoid old data not being erased
+  for(int i=0;i<10;i++){
+    counter.push_back(' ');
   }
-  if(count<100){
-    return ("0"+std::to_string(count));
-  }
-  return std::to_string(count);
+  return counter;
 }
