@@ -263,7 +263,7 @@ string LinuxParser::Uid(int pid){
 
 // DONE_LukPek: Read and return the user associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::User(int pid[[maybe_unused]]) {
+string LinuxParser::User(int pid) {
   string username{};
   std::ifstream file(kPasswordPath);
   if(file.is_open()){
