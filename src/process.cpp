@@ -15,7 +15,6 @@ int Process::Pid() { return pid_; }
 
 // TODO: Return this process's CPU utilization
 float Process::CpuUtilization() {
-  CPUUtilization();
   return cpu_utilization_;
 }
 
@@ -38,20 +37,12 @@ bool Process::operator<(Process const& a) const {
 }
 void Process::GetData(const int& pid) {
   pid_=pid;
+  CPUUtilization();
 }
-float Process::CPUUtilization() {
-//  float proc_time= static_cast<float>(LinuxParser::ActiveJiffies(pid_)/sysconf(_SC_CLK_TCK));
-//  float uptime= static_cast<float>(LinuxParser::UpTime(pid_));
-//  cpu_utilization_=proc_time/uptime;
-//
-  previous_total_cpu_=now_total_cpu_;
-  now_total_cpu_=LinuxParser::ActiveJiffies();
-  previous_process_cpu_=now_process_cpu_;
-  now_process_cpu_=LinuxParser::ActiveJiffies(pid_);
-  auto delta_cpu= static_cast<float>(now_total_cpu_-previous_total_cpu_);
-  auto delta_proc= static_cast<float>(now_process_cpu_-previous_process_cpu_);
-  cpu_utilization_= delta_proc/delta_cpu;
-  return cpu_utilization_;
+void Process::CPUUtilization() {
+  float proc_time= static_cast<float>(LinuxParser::ActiveJiffies(pid_)/sysconf(_SC_CLK_TCK));
+  float uptime= static_cast<float>(LinuxParser::UpTime(pid_));
+  cpu_utilization_=proc_time/uptime;
 }
 bool Process::operator==(Process const& a) const {
   return this->pid_==a.pid_;
