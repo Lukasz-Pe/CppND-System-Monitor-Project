@@ -20,42 +20,11 @@ Processor& System::Cpu() { return cpu_; }
 vector<Process>& System::Processes() {
   vector<int> pids=LinuxParser::Pids();
 //  vector<int> pids{2977,258094,2665,257904,908195,806,7194};
-//  processes_.clear();
-//  for(auto pid:pids){
-//    Process proc;
-//    proc.GetData(pid);
-//    processes_.push_back(proc);
-//  }
-  if(processes_.empty()){
-    for(int pid:pids){
-      AddProcess(pid);
-    }
-  }else{
-    for(int pid:pids){
-      bool exist=false;
-      for(auto process:processes_){
-        if(pid==process.Pid()) {
-          exist = true;
-        }
-      }
-      if(!exist){
-        AddProcess(pid);
-      }
-    }
-    for(auto process:processes_){
-      bool exists=true;
-      for(auto pid:pids){
-        if(process.Pid()!=pid){
-          exists=false;
-        }else{
-          exists=true;
-          break;
-        }
-      }
-      if(!exists){
-        processes_.erase(std::find(processes_.begin(),processes_.end(),process));
-      }
-    }
+  processes_.clear();
+  for(auto pid:pids){
+    Process proc;
+    proc.GetData(pid);
+    processes_.push_back(proc);
   }
   std::sort(processes_.begin(),processes_.end(),compare);
   return processes_; }
